@@ -1,4 +1,5 @@
 import { discordeno } from "./deps.ts";
+import { Emoji } from "./emoji.ts";
 
 export const commands = {
     "neko": {
@@ -15,7 +16,7 @@ export const commands = {
         func: (_bot: discordeno.Bot, _interaction: discordeno.Interaction) => {
             _bot.helpers.sendInteractionResponse(_interaction.id, _interaction.token, {
                 type: discordeno.InteractionResponseTypes.ChannelMessageWithSource,
-                data: { content: "# ***田舎です***", },
+                data: { content: `# ${Emoji.inaka}***田舎です***${Emoji.inaka}`, },
             })
         },
     },
