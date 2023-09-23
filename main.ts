@@ -1,13 +1,11 @@
 import { discordeno } from "./deps.ts"
 import { Secret } from "./secret.ts"
 import { commands } from "./commands.ts";
-
-const Intents = discordeno.Intents;
-const CommandStartChar = "!!";
+import { sendEmoji } from "./inaka.ts";
 
 const bot = discordeno.createBot({
     token: Secret.DISCORD_TOKEN,
-    intents: Intents.Guilds | Intents.GuildMessages | Intents.MessageContent,
+    intents: discordeno.Intents.Guilds | discordeno.Intents.GuildMessages | discordeno.Intents.MessageContent,
     events: {
         ready: (_bot, payload) => {
             console.log(`${payload.user.username} is ready!`)
@@ -25,18 +23,11 @@ const bot = discordeno.createBot({
     await bot.helpers.upsertGuildApplicationCommands(Secret.GUILD_ID, appCommands);
 }
 
-bot.events.messageCreate = (b, message) => {
-    for (const command in commands) {
-        if (message.content.startsWith(CommandStartChar+command)) {
-            (async () => {
-                await ((commands as any)[command] as any).func(b, message);
-            })();
-        }
-    }
+bot.events.messageCreate = (_b, message) => {
+    sendEmoji(_b, message);
 }
 
 bot.events.interactionCreate = (b, interaction) => {
-    // interaction.data?.name
     for (const command in commands) {
         console.log(command, interaction.data?.name)
         if (command === interaction.data?.name) {
