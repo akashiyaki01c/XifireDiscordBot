@@ -1,7 +1,9 @@
 import { discordeno } from "./deps.ts"
 import { Secret } from "./secret.ts"
+import { commands } from "./commands.ts";
 
 const Intents = discordeno.Intents;
+const CommandStartChar = "!!";
 
 const bot = discordeno.createBot({
     token: Secret.DISCORD_TOKEN,
@@ -14,10 +16,12 @@ const bot = discordeno.createBot({
 })
 
 bot.events.messageCreate = (b, message) => {
-    if (message.content === "!neko") {
-        b.helpers.sendMessage(message.channelId, {
-            content: "にゃーん",
-        })
+    for (const command in commands) {
+        if (message.content.startsWith(CommandStartChar+command)) {
+            (async () => {
+                await ((commands as any)[command] as any)(b, message);
+            })();
+        }
     }
 }
 
