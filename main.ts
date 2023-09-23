@@ -16,7 +16,7 @@ const bot = discordeno.createBot({
 {
     let appCommands = [];
     for (const command in commands) {
-        const appCommand = { ...commands.neko, name: command } as discordeno.CreateSlashApplicationCommand;
+        const appCommand = { ...(commands as any)[command], name: command } as discordeno.CreateSlashApplicationCommand;
         appCommands.push(appCommand);
         await bot.helpers.createGuildApplicationCommand(appCommand, Secret.GUILD_ID);
     }
