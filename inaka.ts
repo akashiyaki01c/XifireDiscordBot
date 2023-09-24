@@ -10,7 +10,6 @@ const inaka = [
 ];
 
 export function sendEmoji(bot: discordeno.Bot, message: discordeno.Message) {
-    console.log(message.content)
     if (message.content.includes("東大和市")) {
         bot.helpers.addReaction(message.channelId, message.id, Emoji.higayama_inaka)
     }

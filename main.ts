@@ -29,7 +29,6 @@ bot.events.messageCreate = (_b, message) => {
 
 bot.events.interactionCreate = (b, interaction) => {
     for (const command in commands) {
-        console.log(command, interaction.data?.name)
         if (command === interaction.data?.name) {
             (async () => {
                 await ((commands as any)[command]).func(b, interaction);
