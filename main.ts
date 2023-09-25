@@ -14,7 +14,7 @@ const bot = discordeno.createBot({
 })
 
 {
-    let appCommands = [];
+    const appCommands = [];
     for (const command in commands) {
         const appCommand = { ...(commands as any)[command], name: command } as discordeno.CreateSlashApplicationCommand;
         appCommands.push(appCommand);
